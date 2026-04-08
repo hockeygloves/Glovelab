@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLOVELAB — Кастомные хоккейные перчатки</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+–navy:   #0D1B2A;
+–navy2:  #162535;
+–navy3:  #1E3249;
+–red:    #C0272D;
+–red2:   #9B1E23;
+–gold:   #C9A84C;
+–gold2:  #E8C96A;
+–white:  #F0EBE0;
+–text:   #B8CDD8;
+–muted:  #6E8FA6;
+–border: rgba(255,255,255,0.07);
+}
+
+body {
+background-color: var(–navy);
+color: var(–text);
+font-family: ‘Manrope’, sans-serif;
+overflow-x: hidden;
+line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; }
+
+/* ── TYPOGRAPHY ────────────────────────────────── */
+.tag {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 18px;
+}
+.tag::before {
+content: ‘’;
+display: inline-block;
+width: 28px;
+height: 1px;
+background: var(–gold);
+flex-shrink: 0;
+}
+
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(36px, 5vw, 60px);
+color: var(–white);
+letter-spacing: 2px;
+line-height: 1;
+margin-bottom: 16px;
+}
+
+.section-sub {
+font-size: 14px;
+color: var(–muted);
+line-height: 1.75;
+max-width: 500px;
+}
+
+/* ── NAV ───────────────────────────────────────── */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 200;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 22px 56px;
+background: rgba(13,27,42,0.92);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid var(–border);
+transition: background 0.3s;
+}
+
+.nav-logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 26px;
+letter-spacing: 5px;
+color: var(–white);
+}
+.nav-logo em { color: var(–gold); font-style: normal; }
+
+.nav-links {
+display: flex;
+align-items: center;
+gap: 36px;
+list-style: none;
+}
+.nav-links a {
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+transition: color 0.25s;
+}
+.nav-links a:hover { color: var(–white); }
+
+.nav-btn {
+background: var(–red);
+color: var(–white) !important;
+padding: 10px 24px;
+font-size: 11px !important;
+font-weight: 700 !important;
+letter-spacing: 2px !important;
+transition: background 0.25s, transform 0.2s !important;
+}
+.nav-btn:hover { background: var(–red2) !important; transform: translateY(-1px); }
+
+/* ── HERO ──────────────────────────────────────── */
+#hero {
+min-height: 100vh;
+display: flex;
+align-items: center;
+padding: 120px 56px 80px;
+position: relative;
+overflow: hidden;
+}
+
+.hero-bg {
+position: absolute;
+inset: 0;
+background:
+radial-gradient(ellipse 60% 70% at 75% 50%, rgba(26,46,70,0.8) 0%, transparent 70%),
+linear-gradient(135deg, var(–navy) 40%, #122236 100%);
+z-index: 0;
+}
+
+.hero-bg-img {
+position: absolute;
+inset: 0;
+background-image: url(‘https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=80’);
+background-size: cover;
+background-position: center right;
+opacity: 0.18;
+z-index: 0;
+}
+
+.hero-content {
+position: relative;
+z-index: 1;
+max-width: 640px;
+}
+
+.hero-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(64px, 9vw, 112px);
+line-height: 0.92;
+color: var(–white);
+letter-spacing: 3px;
+margin-bottom: 28px;
+}
+.hero-title .c-gold { color: var(–gold); }
+.hero-title .outline {
+-webkit-text-stroke: 2px var(–white);
+color: transparent;
+}
+
+.hero-desc {
+font-family: ‘Playfair Display’, serif;
+font-style: italic;
+font-size: 17px;
+color: var(–muted);
+line-height: 1.65;
+margin-bottom: 44px;
+max-width: 420px;
+}
+
+.hero-actions {
+display: flex;
+align-items: center;
+gap: 20px;
+flex-wrap: wrap;
+margin-bottom: 56px;
+}
+
+.btn {
+display: inline-block;
+padding: 15px 36px;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 2.5px;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.25s;
+border: none;
+outline: none;
+}
+.btn-red {
+background: var(–red);
+color: var(–white);
+}
+.btn-red:hover {
+background: var(–red2);
+transform: translateY(-2px);
+box-shadow: 0 10px 28px rgba(192,39,45,0.38);
+}
+.btn-outline {
+background: transparent;
+color: var(–text);
+border: 1px solid rgba(255,255,255,0.18);
+}
+.btn-outline:hover {
+border-color: var(–gold);
+color: var(–gold);
+}
+
+.hero-stats {
+display: flex;
+gap: 44px;
+flex-wrap: wrap;
+padding-top: 40px;
+border-top: 1px solid var(–border);
+}
+.stat-val {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 36px;
+color: var(–gold);
+letter-spacing: 1px;
+line-height: 1;
+}
+.stat-lbl {
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–muted);
+margin-top: 5px;
+}
+
+/* ── MARQUEE ───────────────────────────────────── */
+.marquee-bar {
+background: var(–red);
+padding: 14px 0;
+overflow: hidden;
+white-space: nowrap;
+}
+.marquee-inner {
+display: inline-flex;
+animation: marquee-anim 22s linear infinite;
+}
+.marquee-inner span {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 4px;
+color: rgba(255,255,255,0.92);
+padding: 0 28px;
+}
+.marquee-inner .dot { color: var(–gold); font-size: 16px; }
+@keyframes marquee-anim {
+from { transform: translateX(0); }
+to   { transform: translateX(-50%); }
+}
+
+/* ── SECTION WRAPPER ───────────────────────────── */
+.section { padding: 100px 56px; }
+.section-alt { background: var(–navy2); }
+
+/* ── STEPS ─────────────────────────────────────── */
+.steps-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 1px;
+margin-top: 56px;
+background: var(–border);
+}
+.step-card {
+background: var(–navy);
+padding: 36px 28px;
+position: relative;
+overflow: hidden;
+transition: background 0.3s;
+}
+.section-alt .step-card { background: var(–navy2); }
+.step-card:hover { background: var(–navy3); }
+
+.step-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 80px;
+color: rgba(201,168,76,0.08);
+line-height: 1;
+position: absolute;
+top: 12px; right: 12px;
+pointer-events: none;
+}
+.step-icon { font-size: 26px; margin-bottom: 16px; }
+.step-bar { width: 32px; height: 2px; background: var(–red); margin-bottom: 18px; }
+.step-title {
+font-size: 15px;
+font-weight: 700;
+color: var(–white);
+margin-bottom: 10px;
+}
+.step-desc {
+font-size: 13px;
+color: var(–muted);
+line-height: 1.65;
+}
+
+/* ── PORTFOLIO ─────────────────────────────────── */
+.portfolio-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+margin-bottom: 48px;
+gap: 24px;
+flex-wrap: wrap;
+}
+
+.portfolio-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: 260px 260px;
+gap: 3px;
+}
+
+.p-item {
+position: relative;
+overflow: hidden;
+background: var(–navy2);
+}
+.p-item:first-child {
+grid-row: span 2;
+}
+
+.p-inner {
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 72px;
+transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+}
+.p-item:first-child .p-inner { font-size: 120px; }
+
+.p-item:hover .p-inner { transform: scale(1.06); }
+
+.p-bg-1 { background: linear-gradient(135deg, #1A2E45 0%, #0A1520 100%); }
+.p-bg-2 { background: linear-gradient(135deg, #2A1A0A 0%, #140D05 100%); }
+.p-bg-3 { background: linear-gradient(135deg, #0A1A2E 0%, #050D17 100%); }
+.p-bg-4 { background: linear-gradient(135deg, #1A2A0A 0%, #0D1505 100%); }
+
+.p-overlay {
+position: absolute;
+inset: 0;
+background: linear-gradient(to top, rgba(10,20,32,0.95) 0%, rgba(10,20,32,0) 55%);
+display: flex;
+align-items: flex-end;
+padding: 24px;
+opacity: 0;
+transition: opacity 0.35s;
+}
+.p-item:hover .p-overlay { opacity: 1; }
+.p-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+color: var(–white);
+letter-spacing: 1px;
+}
+.p-sub {
+font-size: 11px;
+color: var(–gold);
+letter-spacing: 1px;
+margin-top: 4px;
+}
+
+/* ── PRICING ───────────────────────────────────── */
+.pricing-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 2px;
+margin-top: 56px;
+background: var(–border);
+}
+
+.price-card {
+background: var(–navy);
+padding: 44px 36px;
+position: relative;
+overflow: hidden;
+transition: transform 0.3s;
+}
+.price-card:hover { transform: translateY(-4px); }
+
+.price-card.featured {
+background: var(–navy3);
+outline: 1px solid var(–gold);
+outline-offset: -1px;
+}
+.price-badge {
+position: absolute;
+top: 0; left: 50%;
+transform: translateX(-50%);
+background: var(–gold);
+color: var(–navy);
+font-size: 8px;
+font-weight: 800;
+letter-spacing: 2px;
+text-transform: uppercase;
+padding: 5px 18px;
+}
+
+.price-tier {
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 20px;
+}
+.price-card.featured .price-tier { margin-top: 20px; }
+
+.price-amount {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 58px;
+color: var(–white);
+line-height: 1;
+letter-spacing: 1px;
+}
+.price-amount sup {
+font-size: 20px;
+vertical-align: super;
+font-family: ‘Manrope’, sans-serif;
+font-weight: 400;
+color: var(–muted);
+}
+.price-amount sub {
+font-size: 14px;
+font-family: ‘Manrope’, sans-serif;
+font-weight: 400;
+color: var(–muted);
+vertical-align: baseline;
+}
+
+.price-desc {
+font-size: 13px;
+color: var(–muted);
+line-height: 1.65;
+margin: 20px 0;
+padding: 20px 0;
+border-top: 1px solid var(–border);
+border-bottom: 1px solid var(–border);
+}
+
+.price-list {
+list-style: none;
+margin-bottom: 36px;
+}
+.price-list li {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+font-size: 13px;
+color: var(–text);
+margin-bottom: 12px;
+line-height: 1.5;
+}
+.price-list li::before {
+content: ‘→’;
+color: var(–gold);
+flex-shrink: 0;
+font-size: 13px;
+line-height: 1.5;
+}
+
+.price-btn {
+display: block;
+width: 100%;
+text-align: center;
+padding: 14px;
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 2.5px;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.25s;
+border: none;
+outline: none;
+}
+.price-btn.outline-btn {
+background: transparent;
+color: var(–muted);
+border: 1px solid rgba(255,255,255,0.12);
+}
+.price-btn.outline-btn:hover {
+border-color: var(–gold);
+color: var(–gold);
+}
+.price-btn.solid-btn {
+background: var(–red);
+color: var(–white);
+}
+.price-btn.solid-btn:hover {
+background: var(–red2);
+box-shadow: 0 6px 20px rgba(192,39,45,0.4);
+}
+
+.pricing-note {
+margin-top: 40px;
+padding: 22px 28px;
+background: rgba(201,168,76,0.05);
+border-left: 3px solid var(–gold);
+font-size: 13px;
+color: var(–muted);
+line-height: 1.7;
+}
+.pricing-note strong { color: var(–gold); }
+
+/* ── ORDER ─────────────────────────────────────── */
+.order-layout {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 72px;
+align-items: start;
+}
+
+.order-promises {
+margin-top: 44px;
+display: flex;
+flex-direction: column;
+gap: 22px;
+}
+.promise {
+display: flex;
+align-items: flex-start;
+gap: 18px;
+}
+.promise-icon {
+width: 42px;
+height: 42px;
+background: rgba(201,168,76,0.08);
+border: 1px solid rgba(201,168,76,0.18);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+flex-shrink: 0;
+}
+.promise h4 { font-size: 14px; font-weight: 700; color: var(–white); margin-bottom: 3px; }
+.promise p  { font-size: 12px; color: var(–muted); line-height: 1.6; }
+
+/* form */
+.form-wrap {
+background: var(–navy);
+padding: 44px;
+position: relative;
+}
+.form-wrap::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 3px;
+background: linear-gradient(to right, var(–red), var(–gold));
+}
+
+.form-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+color: var(–white);
+letter-spacing: 2px;
+margin-bottom: 6px;
+}
+.form-sub { font-size: 13px; color: var(–muted); margin-bottom: 32px; }
+
+.f-group { margin-bottom: 18px; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+label.f-label {
+display: block;
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 7px;
+}
+
+input.f-input,
+select.f-input,
+textarea.f-input {
+width: 100%;
+background: var(–navy2);
+border: 1px solid rgba(255,255,255,0.09);
+color: var(–white);
+padding: 13px 15px;
+font-family: ‘Manrope’, sans-serif;
+font-size: 14px;
+outline: none;
+transition: border-color 0.25s;
+border-radius: 0;
+-webkit-appearance: none;
+appearance: none;
+}
+input.f-input::placeholder,
+textarea.f-input::placeholder { color: rgba(110,143,166,0.5); }
+input.f-input:focus,
+select.f-input:focus,
+textarea.f-input:focus { border-color: var(–gold); }
+textarea.f-input { resize: vertical; min-height: 90px; }
+
+/* select arrow */
+.select-wrap { position: relative; }
+.select-wrap::after {
+content: ‘▾’;
+position: absolute;
+right: 14px;
+top: 50%;
+transform: translateY(-50%);
+color: var(–muted);
+font-size: 12px;
+pointer-events: none;
+}
+
+/* option chips */
+.f-chips {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+margin-top: 6px;
+}
+.f-chip {
+border: 1px solid rgba(255,255,255,0.09);
+padding: 11px 14px;
+font-size: 12px;
+color: var(–muted);
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+gap: 8px;
+user-select: none;
+}
+.f-chip:hover { border-color: rgba(201,168,76,0.35); color: var(–text); }
+.f-chip.on { border-color: var(–gold); color: var(–gold); background: rgba(201,168,76,0.06); }
+.f-chip-dot {
+width: 7px; height: 7px;
+border: 1px solid currentColor;
+border-radius: 50%;
+flex-shrink: 0;
+transition: background 0.2s;
+}
+.f-chip.on .f-chip-dot { background: var(–gold); border-color: var(–gold); }
+
+.f-error { border-color: rgba(192,39,45,0.7) !important; }
+
+.submit-btn {
+width: 100%;
+padding: 17px;
+background: var(–red);
+color: var(–white);
+border: none;
+font-family: ‘Manrope’, sans-serif;
+font-size: 11px;
+font-weight: 800;
+letter-spacing: 3px;
+text-transform: uppercase;
+cursor: pointer;
+margin-top: 10px;
+transition: all 0.25s;
+position: relative;
+overflow: hidden;
+}
+.submit-btn:hover {
+background: var(–red2);
+box-shadow: 0 8px 28px rgba(192,39,45,0.45);
+}
+.submit-btn::after {
+content: ‘’;
+position: absolute;
+top: 0; left: -100%;
+width: 50%; height: 100%;
+background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+transition: left 0.5s ease;
+}
+.submit-btn:hover::after { left: 150%; }
+
+.f-legal {
+margin-top: 12px;
+font-size: 10px;
+color: var(–muted);
+text-align: center;
+opacity: 0.55;
+line-height: 1.5;
+}
+
+/* success */
+.success-block { display: none; text-align: center; padding: 52px 24px; }
+.success-block.show { display: block; }
+.success-icon { font-size: 52px; margin-bottom: 20px; }
+.success-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 34px;
+color: var(–gold);
+letter-spacing: 2px;
+margin-bottom: 12px;
+}
+.success-text { font-size: 14px; color: var(–muted); line-height: 1.7; }
+
+/* ── FOOTER ────────────────────────────────────── */
+footer {
+background: #07111B;
+padding: 60px 56px;
+display: grid;
+grid-template-columns: 1.4fr 1fr 1fr;
+gap: 48px;
+border-top: 1px solid var(–border);
+}
+.f-logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+letter-spacing: 5px;
+color: var(–white);
+margin-bottom: 14px;
+}
+.f-logo em { color: var(–gold); font-style: normal; }
+.f-tagline { font-size: 13px; color: var(–muted); line-height: 1.7; max-width: 240px; }
+
+.f-col h4 {
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 18px;
+}
+.f-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.f-col a { font-size: 13px; color: var(–muted); transition: color 0.25s; }
+.f-col a:hover { color: var(–white); }
+.f-col address { font-style: normal; font-size: 13px; color: var(–muted); line-height: 2; }
+
+.footer-bottom {
+background: #07111B;
+padding: 18px 56px;
+border-top: 1px solid var(–border);
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.footer-bottom p { font-size: 11px; color: rgba(110,143,166,0.35); }
+
+/* ── SCROLL REVEAL ─────────────────────────────── */
+.reveal {
+opacity: 0;
+transform: translateY(24px);
+transition: opacity 0.65s cubic-bezier(0.23,1,0.32,1),
+transform 0.65s cubic-bezier(0.23,1,0.32,1);
+}
+.reveal.d1 { transition-delay: 0.1s; }
+.reveal.d2 { transition-delay: 0.2s; }
+.reveal.d3 { transition-delay: 0.3s; }
+.reveal.d4 { transition-delay: 0.4s; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ────────────────────────────────── */
+@media (max-width: 960px) {
+nav { padding: 18px 24px; }
+.nav-links { display: none; }
+.section, #hero { padding: 80px 24px; }
+.hero-title { font-size: clamp(52px, 12vw, 80px); }
+.steps-grid { grid-template-columns: 1fr 1fr; }
+.portfolio-grid {
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 220px 220px 220px;
+}
+.p-item:first-child { grid-row: span 1; grid-column: span 2; }
+.pricing-grid { grid-template-columns: 1fr; background: none; gap: 12px; }
+.order-layout { grid-template-columns: 1fr; gap: 48px; }
+footer { grid-template-columns: 1fr; padding: 48px 24px; }
+.footer-bottom { flex-direction: column; gap: 6px; padding: 18px 24px; text-align: center; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────── -->
+
+<nav id="mainNav">
+  <div class="nav-logo">GLOVE<em>LAB</em></div>
+  <ul class="nav-links">
+    <li><a href="#how">Процесс</a></li>
+    <li><a href="#portfolio">Работы</a></li>
+    <li><a href="#pricing">Цены</a></li>
+    <li><a href="#order" class="nav-btn">Заявка</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-img"></div>
+  <div class="hero-content">
+    <div class="tag">Российский кастом · с 2024</div>
+    <h1 class="hero-title">
+      ТВОЯ<br>
+      <span class="c-gold">ПАРА.</span><br>
+      <span class="outline">ТВОЙ</span><br>
+      СТИЛЬ.
+    </h1>
+    <p class="hero-desc">Хоккейные перчатки с вашим дизайном — вышивка, логотип, герб, клубная символика. От одной пары. Производство в России.</p>
+    <div class="hero-actions">
+      <a href="#order" class="btn btn-red">Создать свои</a>
+      <a href="#portfolio" class="btn btn-outline">Смотреть работы</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">14–21</div>
+        <div class="stat-lbl">Дней производство</div>
+      </div>
+      <div>
+        <div class="stat-val">1 пара</div>
+        <div class="stat-lbl">Минимальный заказ</div>
+      </div>
+      <div>
+        <div class="stat-val">РФ</div>
+        <div class="stat-lbl">Производство</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ───────────────────────────────────────── -->
+
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span>КАСТОМНЫЙ ДИЗАЙН</span><span class="dot">✦</span>
+    <span>ВЫШИВКА И НАШИВКИ</span><span class="dot">✦</span>
+    <span>ПРОИЗВОДСТВО МОСКВА</span><span class="dot">✦</span>
+    <span>ЗАЩИТА УРОВНЯ PRO</span><span class="dot">✦</span>
+    <span>ОТ 1 ПАРЫ</span><span class="dot">✦</span>
+    <span>СРОК 14–21 ДЕНЬ</span><span class="dot">✦</span>
+    <span>КАСТОМНЫЙ ДИЗАЙН</span><span class="dot">✦</span>
+    <span>ВЫШИВКА И НАШИВКИ</span><span class="dot">✦</span>
+    <span>ПРОИЗВОДСТВО МОСКВА</span><span class="dot">✦</span>
+    <span>ЗАЩИТА УРОВНЯ PRO</span><span class="dot">✦</span>
+    <span>ОТ 1 ПАРЫ</span><span class="dot">✦</span>
+    <span>СРОК 14–21 ДЕНЬ</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ──────────────────────────────────── -->
+
+<section class="section section-alt" id="how">
+  <div class="tag reveal">Как это работает</div>
+  <h2 class="section-title reveal d1">4 ШАГА ДО<br>ТВОИХ ПЕРЧАТОК</h2>
+  <p class="section-sub reveal d2">Никаких сложностей — только твоя идея и наше производство.</p>
+  <div class="steps-grid">
+    <div class="step-card reveal d1">
+      <div class="step-num">01</div>
+      <div class="step-icon">💬</div>
+      <div class="step-bar"></div>
+      <div class="step-title">Оставь заявку</div>
+      <div class="step-desc">Заполни форму или напиши в Telegram. Расскажи об идее — логотип, цвет, надпись, герб.</div>
+    </div>
+    <div class="step-card reveal d2">
+      <div class="step-num">02</div>
+      <div class="step-icon">🎨</div>
+      <div class="step-bar"></div>
+      <div class="step-title">Согласуй макет</div>
+      <div class="step-desc">Дизайнер подготовит визуализацию за 2 рабочих дня. Правки — бесплатно до финального ок.</div>
+    </div>
+    <div class="step-card reveal d3">
+      <div class="step-num">03</div>
+      <div class="step-icon">⚙️</div>
+      <div class="step-bar"></div>
+      <div class="step-title">Производство</div>
+      <div class="step-desc">Шьём в Подмосковье, наносим вышивку или термопечать. Срок — 14–21 день с оплаты.</div>
+    </div>
+    <div class="step-card reveal d4">
+      <div class="step-num">04</div>
+      <div class="step-icon">📦</div>
+      <div class="step-bar"></div>
+      <div class="step-title">Доставка</div>
+      <div class="step-desc">Отправляем через СДЭК по всей России. Именная фирменная коробка в комплекте.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO ─────────────────────────────────────── -->
+
+<section class="section" id="portfolio">
+  <div class="portfolio-header">
+    <div>
+      <div class="tag reveal">Примеры работ</div>
+      <h2 class="section-title reveal d1">НАШИ РАБОТЫ</h2>
+    </div>
+    <p class="section-sub reveal d2" style="text-align:right; max-width:280px;">Каждая пара — уникальная история. Несколько примеров наших проектов.</p>
+  </div>
+  <div class="portfolio-grid">
+    <div class="p-item reveal">
+      <div class="p-inner p-bg-1">🥊</div>
+      <div class="p-overlay">
+        <div>
+          <div class="p-name">«ПАТРИОТ»</div>
+          <div class="p-sub">Герб России · Вышивка · Эко-кожа</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-item reveal d1">
+      <div class="p-inner p-bg-2">🧤</div>
+      <div class="p-overlay">
+        <div>
+          <div class="p-name">«ЗОЛОТОЙ МЕДВЕДЬ»</div>
+          <div class="p-sub">Клубная символика · Термопечать</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-item reveal d2">
+      <div class="p-inner p-bg-3">🏒</div>
+      <div class="p-overlay">
+        <div>
+          <div class="p-name">«СЕВЕРНАЯ ЗВЕЗДА»</div>
+          <div class="p-sub">Именные · Номер игрока</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-item reveal d1">
+      <div class="p-inner p-bg-2" style="font-size:60px;">⭐</div>
+      <div class="p-overlay">
+        <div>
+          <div class="p-name">«ТРЕНЕР №1»</div>
+          <div class="p-sub">Подарочная серия · Гравировка</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-item reveal d2">
+      <div class="p-inner p-bg-4" style="font-size:60px;">🔥</div>
+      <div class="p-overlay">
+        <div>
+          <div class="p-name">«ПЛАМЯ»</div>
+          <div class="p-sub">Авторский дизайн · Термоаппликация</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ───────────────────────────────────────── -->
+
+<section class="section section-alt" id="pricing">
+  <div class="tag reveal">Стоимость</div>
+  <h2 class="section-title reveal d1">РАСЧЁТ ЦЕНЫ</h2>
+  <p class="section-sub reveal d2">Прозрачное ценообразование без скрытых платежей.</p>
+
+  <div class="pricing-grid">
+    <!-- Базовый -->
+    <div class="price-card reveal d1">
+      <div class="price-tier">Базовый</div>
+      <div class="price-amount"><sup>от </sup>9&nbsp;900<sub> ₽/пара</sub></div>
+      <div class="price-desc">Стандартная модель с минимальным нанесением. Оптимально для первого заказа или подарка.</div>
+      <ul class="price-list">
+        <li>1 модель (5 размеров)</li>
+        <li>Нанесение: термопечать логотипа или текста</li>
+        <li>2 цвета корпуса на выбор</li>
+        <li>Срок производства — 21 день</li>
+        <li>Доставка СДЭК по России</li>
+      </ul>
+      <button class="price-btn outline-btn" onclick="location.href='#order'">Заказать</button>
+    </div>
+
+```
+<!-- Стандарт (featured) -->
+<div class="price-card featured reveal d2">
+  <div class="price-badge">Популярный</div>
+  <div class="price-tier">Стандарт</div>
+  <div class="price-amount"><sup>от </sup>14&nbsp;900<sub> ₽/пара</sub></div>
+  <div class="price-desc">Полная кастомизация с вышивкой. Этот формат выбирают большинство клиентов.</div>
+  <ul class="price-list">
+    <li>1 модель (5 размеров)</li>
+    <li>Нанесение: вышивка или термоаппликация</li>
+    <li>Логотип, герб, номер, имя — всё включено</li>
+    <li>Дизайн-макет от нашего дизайнера</li>
+    <li>Срок — 14–21 день</li>
+    <li>Именная фирменная коробка</li>
+    <li>Доставка СДЭК по России</li>
+  </ul>
+  <button class="price-btn solid-btn" onclick="location.href='#order'">Заказать</button>
+</div>
+
+<!-- Клубный -->
+<div class="price-card reveal d3">
+  <div class="price-tier">Клубный / Команда</div>
+  <div class="price-amount"><sup>от </sup>11&nbsp;500<sub> ₽/пара</sub></div>
+  <div class="price-desc">Для команд от 5 пар. Единый стиль, групповая скидка и приоритетное производство.</div>
+  <ul class="price-list">
+    <li>От 5 пар — групповая скидка</li>
+    <li>Единый клубный дизайн для команды</li>
+    <li>Индивидуальный номер и имя каждому</li>
+    <li>Выделенный менеджер по проекту</li>
+    <li>Приоритетный срок — от 14 дней</li>
+    <li>Корпоративная упаковка с логотипом клуба</li>
+  </ul>
+  <button class="price-btn outline-btn" onclick="location.href='#order'">Запросить расчёт</button>
+</div>
+```
+
+  </div>
+
+  <div class="pricing-note reveal">
+    <strong>Что влияет на цену?</strong> Сложность дизайна (количество цветов вышивки, площадь нанесения), выбор материала (стандарт или премиум эко-кожа) и тираж. Точную стоимость менеджер рассчитает после заявки — обычно за 2–4 часа.
+  </div>
+</section>
+
+<!-- ── ORDER ─────────────────────────────────────────── -->
+
+<section class="section" id="order">
+  <div class="order-layout">
+    <!-- Left info -->
+    <div>
+      <div class="tag reveal">Заявка</div>
+      <h2 class="section-title reveal d1">ОСТАВИТЬ<br>ЗАЯВКУ</h2>
+      <p class="section-sub reveal d2">Заполни форму — менеджер свяжется в течение 2 часов и ответит на все вопросы.</p>
+      <div class="order-promises reveal d3">
+        <div class="promise">
+          <div class="promise-icon">⚡</div>
+          <div>
+            <h4>Ответ за 2 часа</h4>
+            <p>Менеджер свяжется в рабочее время и уточнит детали заказа</p>
+          </div>
+        </div>
+        <div class="promise">
+          <div class="promise-icon">🎨</div>
+          <div>
+            <h4>Макет бесплатно</h4>
+            <p>Дизайн-визуализация за 2 рабочих дня, правки без доплат</p>
+          </div>
+        </div>
+        <div class="promise">
+          <div class="promise-icon">🛡️</div>
+          <div>
+            <h4>Гарантия качества</h4>
+            <p>Если что-то не так — переделаем или вернём деньги</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+```
+<!-- Right form -->
+<div class="form-wrap reveal d2">
+  <div id="formContent">
+    <div class="form-title">ВАША ЗАЯВКА</div>
+    <div class="form-sub">Заполните поля — мы свяжемся с вами в течение 2 часов</div>
+
+    <div class="f-row">
+      <div class="f-group">
+        <label class="f-label" for="fname">Ваше имя</label>
+        <input class="f-input" type="text" id="fname" placeholder="Алексей">
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="fphone">Телефон / Telegram</label>
+        <input class="f-input" type="text" id="fphone" placeholder="+7 999 000-00-00">
+      </div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Тип заказа</label>
+      <div class="f-chips" id="orderType">
+        <div class="f-chip on" data-v="personal">
+          <div class="f-chip-dot"></div>Для себя (1–2 пары)
+        </div>
+        <div class="f-chip" data-v="gift">
+          <div class="f-chip-dot"></div>В подарок
+        </div>
+        <div class="f-chip" data-v="club">
+          <div class="f-chip-dot"></div>Клубный (3+ пар)
+        </div>
+        <div class="f-chip" data-v="other">
+          <div class="f-chip-dot"></div>Другое
+        </div>
+      </div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label" for="fdesign">Что хотите нанести?</label>
+      <input class="f-input" type="text" id="fdesign" placeholder="Логотип, герб, имя, номер...">
+    </div>
+
+    <div class="f-row">
+      <div class="f-group">
+        <label class="f-label" for="fsize">Размер перчаток</label>
+        <div class="select-wrap">
+          <select class="f-input" id="fsize">
+            <option value="">Выберите размер</option>
+            <option>S — подростковый</option>
+            <option>M — средний</option>
+            <option>L — большой</option>
+            <option>XL — очень большой</option>
+            <option>XXL — максимальный</option>
+            <option>Не знаю, помогите</option>
+          </select>
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-label" for="fqty">Количество пар</label>
+        <input class="f-input" type="number" id="fqty" placeholder="1" min="1" value="1">
+      </div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label" for="fcomment">Комментарий / пожелания</label>
+      <textarea class="f-input" id="fcomment" placeholder="Идеи, референсы, детали..."></textarea>
+    </div>
+
+    <button class="submit-btn" onclick="handleSubmit()">ОТПРАВИТЬ ЗАЯВКУ</button>
+    <div class="f-legal">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</div>
+  </div>
+
+  <div class="success-block" id="successBlock">
+    <div class="success-icon">✅</div>
+    <div class="success-title">ЗАЯВКА ПРИНЯТА!</div>
+    <div class="success-text">Менеджер свяжется с вами в течение 2 часов.<br>Пока ждёте — посмотрите наши работы выше.</div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────── -->
+
+<footer>
+  <div>
+    <div class="f-logo">GLOVE<em>LAB</em></div>
+    <div class="f-tagline">Кастомные хоккейные перчатки с индивидуальным дизайном. Производство в России, доставка по всей стране.</div>
+  </div>
+  <div class="f-col">
+    <h4>Навигация</h4>
+    <ul>
+      <li><a href="#how">Как это работает</a></li>
+      <li><a href="#portfolio">Примеры работ</a></li>
+      <li><a href="#pricing">Цены</a></li>
+      <li><a href="#order">Оставить заявку</a></li>
+    </ul>
+  </div>
+  <div class="f-col">
+    <h4>Контакты</h4>
+    <address>
+      Telegram: @glovelab_ru<br>
+      ВКонтакте: vk.com/glovelab<br>
+      Москва и Подмосковье<br>
+      Доставка: вся Россия (СДЭК)
+    </address>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2024 GLOVELAB. Все права защищены.</p>
+  <p>Производство кастомной хоккейной экипировки</p>
+</div>
+
+<!-- ── JS ────────────────────────────────────────────── -->
+
+<script>
+// Scroll reveal
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { io.observe(el); });
+})();
+
+// Chips toggle
+document.querySelectorAll('#orderType .f-chip').forEach(function(chip) {
+  chip.addEventListener('click', function() {
+    document.querySelectorAll('#orderType .f-chip').forEach(function(c) { c.classList.remove('on'); });
+    chip.classList.add('on');
+  });
+});
+
+// Form submit
+function handleSubmit() {
+  var name    = document.getElementById('fname').value.trim();
+  var phone   = document.getElementById('fphone').value.trim();
+  var design  = document.getElementById('fdesign').value.trim();
+  var size    = document.getElementById('fsize').value;
+
+  // reset errors
+  ['fname','fphone','fdesign','fsize'].forEach(function(id) {
+    document.getElementById(id).classList.remove('f-error');
+  });
+
+  var ok = true;
+  if (!name)   { document.getElementById('fname').classList.add('f-error');   ok = false; }
+  if (!phone)  { document.getElementById('fphone').classList.add('f-error');  ok = false; }
+  if (!design) { document.getElementById('fdesign').classList.add('f-error'); ok = false; }
+  if (!size)   { document.getElementById('fsize').classList.add('f-error');   ok = false; }
+
+  if (!ok) return;
+
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('successBlock').classList.add('show');
+}
+
+// Nav scroll effect
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('mainNav');
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(7,17,27,0.97)';
+    nav.style.borderBottomColor = 'rgba(255,255,255,0.1)';
+  } else {
+    nav.style.background = 'rgba(13,27,42,0.92)';
+    nav.style.borderBottomColor = 'rgba(255,255,255,0.07)';
+  }
+});
+</script>
+
+</body>
+</html>
